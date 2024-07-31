@@ -451,6 +451,8 @@ class SESEventWebhookView(View):
                     self.handle_open(notification, message)
                 elif event_type == 'Click':
                     self.handle_click(notification, message)
+                elif event_type == 'Reject':
+                    self.handle_reject(notification, message)
                 else:
                     self.handle_unknown_event_type(notification, message)
         else:
@@ -528,6 +530,14 @@ class SESEventWebhookView(View):
         self._handle_event(
             event_name='click',
             signal=signals.click_received,
+            notification=notification,
+            message=message
+        )
+
+    def handle_reject(self, notification, message):
+        self._handle_event(
+            event_name='reject',
+            signal=signals.reject_received,
             notification=notification,
             message=message
         )
